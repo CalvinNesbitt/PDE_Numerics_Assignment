@@ -36,14 +36,13 @@ def main():
 
     # Parameters
     xmin = 0
-    xmax = 1
-    nx = 40
+    xmax = 40
     nt = 40
     c = 0.2
 
     # Derived parameters
     dx = (xmax - xmin)/nx
-    
+
     # spatial points for plotting and for defining initial conditions
     x = np.arange(xmin, xmax, dx)
 
@@ -54,7 +53,7 @@ def main():
 
     # Advect the profile using finite difference for all the time steps
     phiFTCS = FTCS(phiOld.copy(), c, nt)
-    
+
     # Calculate and print out error norms
     print("FTCS l2 error norm = ", l2ErrorNorm(phiFTCS, phiAnalytic))
     print("FTCS linf error norm = ", lInfErrorNorm(phiFTCS, phiAnalytic))
@@ -66,7 +65,7 @@ def main():
     plt.clf()
     plt.ion()
     plt.plot(x, phiOld, label='Initial', color='black')
-    plt.plot(x, phiAnalytic, label='Analytic', color='black', 
+    plt.plot(x, phiAnalytic, label='Analytic', color='black',
              linestyle='--', linewidth=2)
     plt.plot(x, phiFTCS, label='FTCS', color='blue')
     plt.axhline(0, linestyle=':', color='black')
@@ -78,4 +77,3 @@ def main():
 
 ### Run the function main defined in this file                      ###
 main()
-
