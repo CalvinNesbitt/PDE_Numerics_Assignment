@@ -45,8 +45,8 @@ def main():
     x = np.arange(xmin, xmax, dx)
 
     # Initial conditions
-    #phiOld = cosBell(x, 0, 0.75)
-    phiOld = squareWave(x, 0, 0.75)
+    phiOld = cosBell(x, 0, 0.75)
+    #phiOld = squareWave(x, 0, 0.75)
     #phiOld = mixed(x, 0, 0.3,0.5,0.75)
     # Exact solution is the initial condition shifted around the domain
     phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
@@ -74,6 +74,8 @@ def main():
     plt.xlabel('$x$')
     input('press return to save file and continue')
     plt.savefig('plots/SolutionFTCS.pdf')
+
+    
 
 ### Run the function main defined in this file                      ###
 main()
