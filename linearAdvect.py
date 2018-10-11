@@ -15,7 +15,7 @@
 ### If you are using Python 2.7 rather than Python 3, import various###
 ### functions from Python 3 such as to use real number division     ###
 ### rather than integer division. ie 3/2  = 1.5  rather than 3/2 = 1###
-from __future__ import absolute_import, division, print_function
+#from __future__ import absolute_import, division, print_function
 
 ### The matplotlib package contains plotting functions              ###
 import matplotlib.pyplot as plt
@@ -47,6 +47,7 @@ def main():
     # Initial conditions
     #phiOld = cosBell(x, 0, 0.75)
     phiOld = squareWave(x, 0, 0.75)
+    #phiOld = mixed(x, 0, 0.3,0.5,0.75)
     # Exact solution is the initial condition shifted around the domain
     phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
 
@@ -71,7 +72,7 @@ def main():
     plt.ylim([-0.2,1.2])
     plt.legend(bbox_to_anchor=(1.15 , 1.1))
     plt.xlabel('$x$')
-    raw_input('press return to save file and continue')
+    input('press return to save file and continue')
     plt.savefig('plots/SolutionFTCS.pdf')
 
 ### Run the function main defined in this file                      ###
