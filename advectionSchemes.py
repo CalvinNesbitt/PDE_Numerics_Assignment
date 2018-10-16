@@ -40,6 +40,10 @@ def FTCS(phiOld, c, nt):
         # new time-step array for phi
         phi = phiOld.copy()
 
+        # Matrix for calculating phi at the next time step
+
+
+
         # BTCS for each time-step
         for it in range(nt):
             # Loop through all space using remainder after division (%)
