@@ -46,8 +46,7 @@ def BTCS(phiOld, c, nt):
 
     # BTCS for each time-step
     for it in range(nt):
-        # Loop through all space using remainder after division (%)
-        # to cope with periodic boundary conditions
+        # Solve Matrix equation at each time step to calculate new phi
         phi =  np.linalg.solve(timeStepMatrix, phiOld)
 
         # update arrays for next time-step

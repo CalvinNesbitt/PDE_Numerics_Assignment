@@ -7,8 +7,6 @@
 #from __future__ import absolute_import, division, print_function
 
 import numpy as np
-from Matrix_test import *
-
 
 def l2ErrorNorm(phi, phiExact):
     "Calculates the l2 error norm (RMS error) of phi in comparison to"
