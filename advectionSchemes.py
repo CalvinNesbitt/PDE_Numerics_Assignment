@@ -48,10 +48,7 @@ def BTCS(phiOld, c, nt):
     for it in range(nt):
         # Loop through all space using remainder after division (%)
         # to cope with periodic boundary conditions
-        phi =  phiOld * timeStepMatrix
-        print('phi = ', phi)
-        print('phiOld = ', phiOld)
-        print('inverseMatrix = ', timeStepMatrix)
+        phi =  np.linalg.solve(timeStepMatrix, phiOld)
 
         # update arrays for next time-step
         phiOld = phi.copy()
