@@ -8,6 +8,7 @@
 
 # The numpy package for numerical functions and pi
 import numpy as np
+from Matrix_test import *
 
 def FTCS(phiOld, c, nt):
     "Linear advection of profile in phiOld using FTCS, Courant number c"
@@ -31,28 +32,28 @@ def FTCS(phiOld, c, nt):
 
     return phi
 
-    def BTCS(phiOld, c, nt):
-        "Linear advection of profile in phiOld using BTCS, Courant number c"
-        "for nt time-steps"
+def BTCS(phiOld, c, nt):
+    "Linear advection of profile in phiOld using BTCS, Courant number c"
+    "for nt time-steps"
 
-        nx = len(phiOld)
+    nx = len(phiOld)
 
-        # new time-step array for phi
-        phi = phiOld.copy()
+    # new time-step array for phi
+    phi = phiOld.copy()
 
-        # Matrix for calculating phi at the next time step
+    # Matrix for calculating phi at the next time step
+    timeStepMatrix = btcsTimeStep(nx, c)
 
+    # BTCS for each time-step
+    for it in range(nt):
+        # Loop through all space using remainder after division (%)
+        # to cope with periodic boundary conditions
+        phi =  phiOld * timeStepMatrix
+        print('phi = ', phi)
+        print('phiOld = ', phiOld)
+        print('inverseMatrix = ', timeStepMatrix)
 
+        # update arrays for next time-step
+        phiOld = phi.copy()
 
-        # BTCS for each time-step
-        for it in range(nt):
-            # Loop through all space using remainder after division (%)
-            # to cope with periodic boundary conditions
-            for j in range(nx):
-                phi[j] = phiOld[j] - 0.5*c*\
-                         (phiOld[(j+1)%nx] - phiOld[(j-1)%nx])
-
-            # update arrays for next time-step
-            phiOld = phi.copy()
-
-        return phi
+    return phi
