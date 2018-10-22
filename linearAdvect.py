@@ -35,7 +35,7 @@ def main():
     xmin = 0
     xmax = 1
     nx = 40
-    nt = 40
+    nt = 80
     c = 0.2
 
     # Derived parameters
