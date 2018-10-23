@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *
+from TimeStep_Error_Plotting import *
 
 ### The main code is inside a function to avoid global variables    ###
 def main():
@@ -55,7 +56,6 @@ def main():
     phiFTCS = FTCS(phiOld.copy(), c, nt)
     phiBTCS = BTCS(phiOld.copy(), c, nt)
 
-
     # Calculate and print out error norms
     print("FTCS l2 error norm = ", l2ErrorNorm(phiFTCS, phiAnalytic))
     print("FTCS linf error norm = ", lInfErrorNorm(phiFTCS, phiAnalytic))
@@ -78,10 +78,11 @@ def main():
     plt.legend(bbox_to_anchor=(0.5, 0.5))
     plt.xlabel('$x$')
     plt.show()
-    input('press return to save file and continue')
+    input('press return to save file and see timestep error comparison')
     plt.savefig('plots/SolutionFTCS.pdf')
 
-
+    # Plotting errors a function of number of time steps
+    TimeStepErrors(xmin, xmax, nx, nt, c)
 
 ### Run the function main defined in this file                      ###
 main()

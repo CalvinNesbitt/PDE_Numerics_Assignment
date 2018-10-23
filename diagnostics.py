@@ -6,7 +6,12 @@
 # rather than integer division. ie 3/2  = 1.5  rather than 3/2 = 1
 #from __future__ import absolute_import, division, print_function
 
+import matplotlib.pyplot as plt
+
 import numpy as np
+from initialConditions import *
+from advectionSchemes import *
+from diagnostics import *
 
 def l2ErrorNorm(phi, phiExact):
     "Calculates the l2 error norm (RMS error) of phi in comparison to"
