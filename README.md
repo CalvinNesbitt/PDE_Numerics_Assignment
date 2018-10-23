@@ -1,4 +1,4 @@
-Skeleton Python 3 code for students to develop in a linear advection assignment. All code is run from linearAdvect.py. Linear advection schemes are implemented in advectionSchemes.py. Some error diagnostics  are implemented in diagnostics.py  and some functions for initial conditions are in initialConditions.py.
+Python 3 code for linear advection assignment. 
 
 In order to run this code you will first need to create a directory called "plots". 
 
