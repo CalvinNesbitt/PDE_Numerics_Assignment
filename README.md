@@ -1,4 +1,4 @@
-Python 3 code for linear advection assignment. It runs two numerical schemes for a set number of time steps. There is also an error comparison for differing number of timesteps. 
+Python 3 code for linear advection assignment. It runs two numerical schemes for a set number of time steps. There is also an error comparison for differing number of timesteps. All code is run from linearAdvect.py.
 
 In order to run this code you will first need to create a directory called "plots". 
 
