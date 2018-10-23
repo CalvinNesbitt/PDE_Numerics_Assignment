@@ -35,7 +35,7 @@ def main():
     xmin = 0
     xmax = 1
     nx = 40
-    nt = 80
+    nt = 70
     c = 0.2
 
     # Derived parameters
@@ -77,6 +77,7 @@ def main():
     plt.ylim([-0.2,1.2])
     plt.legend(bbox_to_anchor=(0.5, 0.5))
     plt.xlabel('$x$')
+    plt.show()
     input('press return to save file and continue')
     plt.savefig('plots/SolutionFTCS.pdf')
 
