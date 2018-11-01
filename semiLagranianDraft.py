@@ -10,12 +10,13 @@ from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *
 from TimeStep_Error_Plotting import *
+from scipy.interpolate import lagrange
 
 # Parameters
 xmin = 0
 xmax = 1
-nx = 5
-nt = 3
+nx = 100
+nt = 100
 c = 0.2
 
 # Derived parameters
@@ -23,9 +24,10 @@ dx = (xmax - xmin)/nx
 
 # Spatial points for plotting and for defining initial conditions
 x = np.arange(xmin, xmax, dx)
-print(x)
+#print(x)
 
 phiOld = cosBell(x, 0, 0.75)
+plt.plot(x, phiOld, label='Initial')
 
 #def sem_lag(phiOld, c, nt):
 "Linear advection of profile in phiOld using Semi Lagranian, Courant number c"
@@ -35,21 +37,31 @@ nx = len(phiOld)
 
 # new time-step array for phi
 #phi = phiOld.copy()
+phi = phiOld.copy()
 
-# FTCS for each time-step
+# Semi Lagrangian for each time-step
 for it in range(nt):
     # Loop through all space using remainder after division (%)
     # to cope with periodic boundary conditions
     for j in range(nx):
-        k = int(np.floor(abs(j + 1 - c))) # Index defining interpolating polynomial
-        # abs term is to deal with j = 0 index
-        print(k)
-        base_points = x[k-1:len(x)]# Array of the spatial values we will interpolate from
-        print(base_points)
-        #phi[j] = phiOld[j] - 0.5*c*\
-                 #(phiOld[(j+1)%nx] - phiOld[(j-1)%nx])
+        # Find base_points of interpolating polynomial
+        k = int(np.floor(j - c)) # Index below advected point
+        #print(k)
+        x_base_points = np.array([x[k-1],x[k],x[(k+1)%nx],x[(k+2)%nx]])
+        #print(x_base_points)
+        y_base_points = np.array([phiOld[k-1],phiOld[k],phiOld[(k+1)%nx],phiOld[(k+2)%nx]])
+        #print(y_base_points)
+        # Build interpolating polynomial
+        poly = lagrange(x_base_points, y_base_points)
+        # Find down-wind point
+        beta = j - c - k
+        x_jd = beta * dx + x[k]
+        #print(x_jd)
+        # Calculate phi upwind
+        phi[j] = poly(x_jd)
+    phiOld = phi.copy() # Update for next time step
 
-        # update arrays for next time-step
-        #phiOld = phi.copy()
+plt.plot(x, phi, label='SL', color='red')
+plt.show()
 
     #return phi
