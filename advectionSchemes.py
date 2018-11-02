@@ -9,6 +9,7 @@
 # The numpy package for numerical functions and pi
 import numpy as np
 from Matrix_test import *
+from scipy.interpolate import lagrange
 
 def FTCS(phiOld, c, nt):
     "Linear advection of profile in phiOld using FTCS, Courant number c"
@@ -51,5 +52,35 @@ def BTCS(phiOld, c, nt):
 
         # update arrays for next time-step
         phiOld = phi.copy()
+
+    return phi
+
+def sem_lag(phiOld, c, nt, x, dx):
+    "Linear advection of profile in phiOld using Semi Lagranian scheme, Courant number c"
+    "for nt time-steps, spatial points x"
+
+    nx = len(phiOld)
+
+    # new time-step array for phi
+    phi = phiOld.copy()
+
+    for it in range(nt):
+
+        for j in range(nx):
+
+            # Building down wind interpolating polynomial
+                # Find base_points of interpolating polynomial
+            k = int(np.floor(j - c)) # Index below advected point
+            x_base_points = np.array([x[k-1],x[k],x[(k+1)%nx],x[(k+2)%nx]])
+            y_base_points = np.array([phiOld[k-1],phiOld[k],phiOld[(k+1)%nx],phiOld[(k+2)%nx]])
+            poly = lagrange(x_base_points, y_base_points)
+
+            # Finding down-wind point
+            beta = j - c - k
+            x_jd = beta * dx + x[k]
+
+            # Calculate phi upwind
+            phi[j] = poly(x_jd)
+        phiOld = phi.copy() # Update for next time step
 
     return phi

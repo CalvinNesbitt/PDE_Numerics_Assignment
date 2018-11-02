@@ -16,7 +16,7 @@ from scipy.interpolate import lagrange
 xmin = 0
 xmax = 1
 nx = 100
-nt = 100
+nt = 20
 c = 0.2
 
 # Derived parameters
@@ -41,16 +41,14 @@ phi = phiOld.copy()
 
 # Semi Lagrangian for each time-step
 for it in range(nt):
-    # Loop through all space using remainder after division (%)
-    # to cope with periodic boundary conditions
+
     for j in range(nx):
         # Find base_points of interpolating polynomial
         k = int(np.floor(j - c)) # Index below advected point
         #print(k)
         x_base_points = np.array([x[k-1],x[k],x[(k+1)%nx],x[(k+2)%nx]])
-        #print(x_base_points)
         y_base_points = np.array([phiOld[k-1],phiOld[k],phiOld[(k+1)%nx],phiOld[(k+2)%nx]])
-        #print(y_base_points)
+
         # Build interpolating polynomial
         poly = lagrange(x_base_points, y_base_points)
         # Find down-wind point

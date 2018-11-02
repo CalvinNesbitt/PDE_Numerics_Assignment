@@ -55,12 +55,15 @@ def main():
     # Advect the profile using finite difference for all the time steps
     phiFTCS = FTCS(phiOld.copy(), c, nt)
     phiBTCS = BTCS(phiOld.copy(), c, nt)
+    phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx)
 
     # Calculate and print out error norms
     print("FTCS l2 error norm = ", l2ErrorNorm(phiFTCS, phiAnalytic))
     print("FTCS linf error norm = ", lInfErrorNorm(phiFTCS, phiAnalytic))
     print("BTCS l2 error norm = ", l2ErrorNorm(phiBTCS, phiAnalytic))
     print("BTCS linf error norm = ", lInfErrorNorm(phiBTCS, phiAnalytic))
+    print("Semi Lagrangian l2 error norm = ", l2ErrorNorm(phiBTCS, phiAnalytic))
+    print("Semi Lagrangian linferror norm = ", lInfErrorNorm(phiBTCS, phiAnalytic))
 
     # Plot the solutions
     font = {'size'   : 20}
@@ -73,15 +76,16 @@ def main():
              linestyle='--', linewidth=2)
     plt.plot(x, phiFTCS, label='FTCS', color='red')
     plt.plot(x, phiBTCS, label='BTCS', color='blue')
+    plt.plot(x, phi_sem_lag, label='SL', color='green')
     plt.axhline(0, linestyle=':', color='black')
     plt.ylim([-0.2,1.2])
     plt.legend(bbox_to_anchor=(0.5, 0.5))
     plt.xlabel('$x$')
     plt.show()
     input('press return to save file and see timestep error comparison')
-    plt.savefig('plots/SolutionFTCS.pdf')
+    plt.savefig('plots/SchemeComparisons.png')
 
-    # Plotting errors a function of number of time steps
+    # Plotting errors as a function of number of time steps
     TimeStepErrors(xmin, xmax, nx, nt, c)
 
 ### Run the function main defined in this file                      ###
