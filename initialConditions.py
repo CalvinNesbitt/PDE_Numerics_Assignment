@@ -1,9 +1,5 @@
 # Various different initial conditions for linear advection
 
-# If you are using Python 2.7 rather than Python 3, import various
-# functions from Python 3 such as to use real number division
-# rather than integer division. ie 3/2  = 1.5  rather than 3/2 = 1
-#from __future__ import absolute_import, division, print_function
 
 import numpy as np
 

@@ -1,6 +1,5 @@
 "This is a workspace to write the semi Lagranian scheme"
 
-### The matplotlib package contains plotting functions              ###
 import matplotlib.pyplot as plt
 import numpy as np
 

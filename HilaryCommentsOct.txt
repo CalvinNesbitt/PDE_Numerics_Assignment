@@ -2,11 +2,11 @@ Great start. Good code.
 
 Good use of git with good commit messages.
 
-You should have a .gitignore file
+#You should have a .gitignore file
 
 Delete and remove old code and old files from the repository that is not needed to create the results that you will put into the report. The point of using a version control system such as git is that you can always get back old code.
 
-I cannot run your code because I do not have Matrix_test
+#I cannot run your code because I do not have Matrix_test
 
 Do not leave my teaching comments:
 # If you are using Python 2.7 rather than Python 3, import various

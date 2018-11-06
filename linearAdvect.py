@@ -11,7 +11,6 @@ from advectionSchemes import *
 from diagnostics import *
 from TimeStep_Error_Plotting import *
 
-### The main code is inside a function to avoid global variables    ###
 def main():
     "Advect the initial conditions using various advection schemes and"
     "compare results"
