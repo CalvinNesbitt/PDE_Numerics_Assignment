@@ -22,7 +22,7 @@ you can just do:
         phi =  np.linalg.solve(timeStepMatrix, phi)
 so you don't need so many arrays defined.
 
-You should compare schemes with FTBS and CTCS. FTBS and CTCS should be used as the very simple naive schemes that you should aim to beat.
+#You should compare schemes with FTBS and CTCS. FTBS and CTCS should be used as the very simple naive schemes that you should aim to beat.
 
-You should also implement one of the schemes from chapter 6 of the notes to show that schemes exist that can do better than CTCS and FTBS
+#You should also implement one of the schemes from chapter 6 of the notes to show that schemes exist that can do better than CTCS and FTBS
 
