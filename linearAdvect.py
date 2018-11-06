@@ -36,6 +36,7 @@ def main():
     phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
 
     # Advect the profile using finite difference for all the time steps
+    phiFTBS = FTBS(phiOld.copy(), c, nt)
     phiFTCS = FTCS(phiOld.copy(), c, nt)
     phiBTCS = BTCS(phiOld.copy(), c, nt)
     phiCTCS = CTCS(phiOld.copy(), c, nt)
@@ -58,6 +59,7 @@ def main():
     plt.plot(x, phiOld, label='Initial', color='black')
     plt.plot(x, phiAnalytic, label='Analytic', color='black',
              linestyle='--', linewidth=2)
+    plt.plot(x, phiFTBS, label='FTBS', color='#008000')
     plt.plot(x, phiFTCS, label='FTCS', color='red')
     plt.plot(x, phiBTCS, label='BTCS', color='blue')
     plt.plot(x, phiCTCS, label='CTCS', color='yellow')

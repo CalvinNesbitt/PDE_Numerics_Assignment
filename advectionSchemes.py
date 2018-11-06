@@ -6,6 +6,28 @@ import numpy as np
 from Matrix_test import *
 from scipy.interpolate import lagrange
 
+def FTBS(phiOld, c, nt):
+    "Linear advection of profile in phiOld using FTBS, Courant number c"
+    "for nt time-steps"
+
+    nx = len(phiOld)
+
+    # new time-step array for phi
+    phi = phiOld.copy()
+
+    # FTCS for each time-step
+    for it in range(nt):
+        # Loop through all space using remainder after division (%)
+        # to cope with periodic boundary conditions
+        for j in range(nx):
+            phi[j] = phiOld[j] - c*\
+                     (phiOld[(j)%nx] - phiOld[(j-1)%nx])
+
+        # update arrays for next time-step
+        phiOld = phi.copy()
+
+    return phi
+
 def FTCS(phiOld, c, nt):
     "Linear advection of profile in phiOld using FTCS, Courant number c"
     "for nt time-steps"
