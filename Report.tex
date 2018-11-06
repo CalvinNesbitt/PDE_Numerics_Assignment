@@ -24,12 +24,37 @@
 \begin{document}
 \maketitle
 
+\section{Introduction}
+I have coded numerical schemes of the Linear Advection Equation. First I will briefly describe the linear advection equation.
+\subsection{Schemes I will analyse}
+Here I will briefly describe each scheme I have coded: FTBS, FTCS, CTCS, BTCS, Semi Lagrangian.
+\subsection{Description of Analysis and Expectations}
+Here I will briefly note that I will analyse Stability and Mass Conservation. I will outline my expectation that the Semi Lagrangian scheme performs best. I also expect BTCS and CTCS to perform well whilst I expect FTBS and FTCS to perform poorly.
+\section{Stability Analysis}
 
-\begin{enumerate}
-	\item I will solve the linear advection equation $\nabla \cdot u = 0$ with one spatial dimension.
-	\item I will use the FTBS and FTCS schemes as laid out in 
-	
-\end{enumerate}
+Brief outline of stability and the L1, L2, LInf errors. Why we would expect them to change if scheme is unstable (Lax-Wendroff Thm). 
 
+\subsection{Varying the Courant Number c}
+Here I will describe the test I designed where I varied the courant number c and saw how the L1, L2 and Linf errors varied for each scheme. 
+\subsection{Results}
+Give results of test for each scheme. I will include plots of the errors for each scheme as functions of c. 
+\subsection{Comparison to Theory}
+Comparison of test results with theoretical expectation. Comment as to whether this is correct or not. Give reason if not correct.
+\section{Mass Conservation Analysis}
+
+Brief mention of mass conservation. Choose c where each scheme is still stable. 
+
+\subsection{Mass Conservation Test}
+
+Explain how I calculate the mass conservation of each scheme (take the mean after a fixed number of time steps.
+
+\subsection{Results and Comparison to Theory}
+Give results of test. Comparison of test results with theoretical expectation. Comment as to whether this is correct or not. Give reason if not correct.
+
+\section{Scheme Comparison}
+
+Conclusion about which schemes performed well which performed badly.
+
+\section{Plots}
  
 \end{document}
