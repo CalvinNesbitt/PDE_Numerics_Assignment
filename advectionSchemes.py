@@ -48,16 +48,36 @@ def BTCS(phiOld, c, nt):
     # BTCS for each time-step
     for it in range(nt):
         # Solve Matrix equation at each time step to calculate new phi
-        phi =  np.linalg.solve(timeStepMatrix, phiOld)
+        phi =  np.linalg.solve(timeStepMatrix, phi)
+
+    return phi
+
+def CTCS(phiOld, c, nt):
+    "Linear advection of profile in phiOld using CTCS, Courant number c"
+    "for nt time-steps"
+
+    nx = len(phiOld)
+
+    # new time-step array for phi
+    phiOlder = phiOld.copy()
+    phiOld = FTCS(phiOlder, c, 1) #Use FTCS for first time step
+    phi = phiOld.copy()
+    # CTCS for each time-step after the first
+    for it in range(1, nt):
+        # Loop through all space using remainder after division (%)
+        # to cope with periodic boundary conditions
+        for j in range(nx):
+            phi[j] = phiOlder[j] - c*(phiOld[(j+1)%nx] - phiOld[(j-1)%nx])
 
         # update arrays for next time-step
+        phiOlder = phiOld.copy()
         phiOld = phi.copy()
 
     return phi
 
 def sem_lag(phiOld, c, nt, x, dx):
     "Linear advection of profile in phiOld using Semi Lagranian scheme, Courant number c"
-    "for nt time-steps, spatial points x"
+    "for nt time-steps, spatial points x, spatial grid steps of length dx"
 
     nx = len(phiOld)
 

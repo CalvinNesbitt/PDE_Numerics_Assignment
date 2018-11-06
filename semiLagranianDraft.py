@@ -36,7 +36,6 @@ plt.plot(x, phiOld, label='Initial')
 nx = len(phiOld)
 
 # new time-step array for phi
-#phi = phiOld.copy()
 phi = phiOld.copy()
 
 # Semi Lagrangian for each time-step

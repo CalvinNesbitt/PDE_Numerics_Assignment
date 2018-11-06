@@ -1,23 +1,7 @@
 
 # Outer code for setting up the linear advection problem on a uniform
-# grid and calling the function to perform the linear advection and plot.
+# grid. We call different schemes to perform the linear advection and plot.
 
-### Copy out most of this code. Code commented with 3#s (like this) ###
-### is here to help you to learn python and need not be copied      ###
-
-
-### ./linearAdvect.py                                              ###
-
-### Note that blocks are defined by indentation in Python. You     ###
-### should never mix tabs and spaces for indentation - use 4 spaces.###
-### Setup your text editor to insert 4 spaces when you press tab    ###
-
-### If you are using Python 2.7 rather than Python 3, import various###
-### functions from Python 3 such as to use real number division     ###
-### rather than integer division. ie 3/2  = 1.5  rather than 3/2 = 1###
-#from __future__ import absolute_import, division, print_function
-
-### The matplotlib package contains plotting functions              ###
 import matplotlib.pyplot as plt
 
 # read in all the linear advection schemes, initial conditions and other
@@ -35,8 +19,8 @@ def main():
     # Parameters
     xmin = 0
     xmax = 1
-    nx = 40
-    nt = 30
+    nx = 100
+    nt = 100
     c = 0.2
 
     # Derived parameters
@@ -55,6 +39,7 @@ def main():
     # Advect the profile using finite difference for all the time steps
     phiFTCS = FTCS(phiOld.copy(), c, nt)
     phiBTCS = BTCS(phiOld.copy(), c, nt)
+    phiCTCS = CTCS(phiOld.copy(), c, nt)
     phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx)
 
     # Calculate and print out error norms
@@ -76,6 +61,7 @@ def main():
              linestyle='--', linewidth=2)
     plt.plot(x, phiFTCS, label='FTCS', color='red')
     plt.plot(x, phiBTCS, label='BTCS', color='blue')
+    plt.plot(x, phiCTCS, label='CTCS', color='yellow')
     plt.plot(x, phi_sem_lag, label='SL', color='green')
     plt.axhline(0, linestyle=':', color='black')
     plt.ylim([-0.2,1.2])
@@ -86,7 +72,7 @@ def main():
     plt.savefig('plots/SchemeComparisons.png')
 
     # Plotting errors as a function of number of time steps
-    TimeStepErrors(xmin, xmax, nx, nt, c)
+    #TimeStepErrors(xmin, xmax, nx, nt, c)
 
 ### Run the function main defined in this file                      ###
 main()
