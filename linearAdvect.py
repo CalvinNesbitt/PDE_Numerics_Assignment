@@ -1,4 +1,3 @@
-
 # Outer code for setting up the linear advection problem on a uniform
 # grid. We call different schemes to perform the linear advection and plot.
 
