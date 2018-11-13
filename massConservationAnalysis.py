@@ -1,7 +1,7 @@
 # Mass Conservation Analysis
 
 def nmc_error(phi, phi_initial):
-    "Calculates Normalise Mass Conservation error of phi given initial condition"
+    "Calculates Normalised Mass Conservation error of phi given initial condition"
     "phi_initial"
     error = (phi.mean - phi_initial.mean)/phi_initial.mean
     return error
