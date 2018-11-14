@@ -106,7 +106,8 @@ def sem_lag(phiOld, c, nt, x, dx):
         for j in range(nx):
 
             # Building down wind interpolating polynomial
-                # Find base_points of interpolating polynomial
+
+            # Find base_points of interpolating polynomial
             k = int(np.floor(j - c)) # Index below advected point
             x_base_points = np.array([x[k-1],x[k],x[(k+1)%nx],x[(k+2)%nx]])
             y_base_points = np.array([phiOld[k-1],phiOld[k],phiOld[(k+1)%nx],phiOld[(k+2)%nx]])

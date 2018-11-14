@@ -10,7 +10,6 @@ from diagnostics import *
 # Parameters
 xmin = 0
 xmax = 1
-
 nx_values = np.arange(2, 100, 1)
 dx_values = (xmax - xmin)/nx_values # Calculate spatial step
 c = 0.5

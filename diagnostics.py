@@ -23,3 +23,9 @@ def lInfErrorNorm(phi, phiExact):
     "to phiExact"
     phiError = phi - phiExact
     return np.max(np.abs(phiError))/np.max(np.abs(phiExact))
+
+def nmc_error(phi, phi_initial):
+    "Calculates Normalised Mass Conservation error of phi given initial condition"
+    "phi_initial"
+    error = (phi.mean() - phi_initial.mean())/phi_initial.mean()
+    return error
