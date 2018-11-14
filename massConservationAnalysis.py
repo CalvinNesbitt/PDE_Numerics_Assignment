@@ -6,12 +6,6 @@ from diagnostics import *
 from TimeStep_Error_Plotting import *
 import numpy as np
 
-def nmc_error(phi, phi_initial):
-    "Calculates Normalised Mass Conservation error of phi given initial condition"
-    "phi_initial"
-    error = (phi.mean() - phi_initial.mean())/phi_initial.mean()
-    return error
-
 # Parameters
 xmin = 0
 xmax = 1

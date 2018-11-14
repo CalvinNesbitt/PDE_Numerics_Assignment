@@ -18,7 +18,6 @@ def l2ErrorNorm(phi, phiExact):
 
     return l2
 
-
 def lInfErrorNorm(phi, phiExact):
     "Calculates the linf error norm (maximum normalised error) in comparison"
     "to phiExact"
