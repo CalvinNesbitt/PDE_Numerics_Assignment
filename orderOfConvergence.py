@@ -50,7 +50,7 @@ for i,dx in enumerate(dx_values):
     phiAnalytic = cosBell((x - c*nt*dx_values[i])%(xmax - xmin), 0, 0.75)
     error_Matrix[i, 1] = l2ErrorNorm(phiBTCS, phiAnalytic) # Store L2 errors
 np.savetxt('results/convergence_analysis/BTCS_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running FTBS scheme for different spatial discretisation')
-plt.plot(dx_values, error_Matrix[:, 1],'--c^', label = 'FTBS')
+plt.plot(dx_values, error_Matrix[:, 1],'--c^', label = 'BTCS')
 
 # Error calculation for CTCS scheme
 for i,dx in enumerate(dx_values):
@@ -66,8 +66,8 @@ plt.plot(dx_values, error_Matrix[:, 1],'--m^', label = 'CTCS')
 
 #Plot Details
 plt.plot(dx_values, dx_values, label = 'x')
-plt.semilogy(dx_values, dx_values**2, label = 'x^2')
-plt.xlabel('Spatial step')
+plt.loglog(dx_values, dx_values**2, label = 'x^2')
+plt.xlabel('Spatial step (dx)')
 plt.ylabel('L2 Error (Logarithmic)')
 plt.title('L2 Error as function of dx')
 plt.legend(loc=9, bbox_to_anchor=(0.5, -0.1), ncol=5)
