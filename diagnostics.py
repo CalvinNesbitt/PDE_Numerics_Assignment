@@ -1,6 +1,5 @@
 # Various function for plotting results and for calculating error measures
 
-
 import matplotlib.pyplot as plt
 
 import numpy as np

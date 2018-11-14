@@ -7,9 +7,9 @@ from TimeStep_Error_Plotting import *
 import numpy as np
 import math
 
-# Given an initial condition, and spatial grid conditions. Run each scheme
-# for a even number of courant numbers between lower_c and upper_c
 def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
+    "Given an initial condition, and spatial grid conditions. Run each scheme"
+    "or a even number of courant numbers between lower_c and upper_c"
 
     # Derived grid points
     dx = (xmax - xmin)/nx
@@ -85,5 +85,3 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
     plt.show()
 
     return
-
-main(0, 1, 60, 0.1, 2.1, 100)

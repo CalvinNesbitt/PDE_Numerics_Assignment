@@ -17,6 +17,8 @@ def main():
     # Parameters
     xmin = 0
     xmax = 1
+    dx =
+    d
     nx = 100
     nt = 100
     c = 0.2
