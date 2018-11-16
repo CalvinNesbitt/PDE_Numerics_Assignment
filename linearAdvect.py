@@ -1,42 +1,28 @@
-# Outer code for setting up the linear advection problem on a uniform
-# grid. We call different schemes to perform the linear advection and plot.
+# Code for advecting a cosine wave by each scheme. Results are saved in plots directory
 
 import matplotlib.pyplot as plt
 
-# read in all the linear advection schemes, initial conditions and other
+# Read in all the linear advection schemes, initial conditions and other
 # code associated with this application
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *
-from TimeStep_Error_Plotting import *
 
-def main():
+def main(xmin, xmax, nx, nt, c):
     "Advect the initial conditions using various advection schemes and"
-    "compare results"
-
-    # Parameters
-    xmin = 0
-    xmax = 1
-    nx = 50
-    nt = 50
-    c = 1.2
+    "illustrate results in a plot"
 
     # Derived parameters
     dx = (xmax - xmin)/nx
 
-    # spatial points for plotting and for defining initial conditions
+    # Spatial points for plotting and for defining initial conditions
     x = np.arange(xmin, xmax, dx)
 
-    # Initial conditions
+    # Initial condition
     phiOld = cosBell(x, 0, 0.75)
-    #phiOld = squareWave(x, 0, 0.75)
-    #phiOld = mixed(x, 0, 0.3,0.5,0.75)
+
     # Exact solution is the initial condition shifted around the domain
     phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
-
-    # Courant Stability Analysis
-    courantStabilityAnalysis.main(0, 1, 50, 0.1, 1.8, 100)
-
 
     # Advect the profile using finite difference for all the time steps
     phiFTBS = FTBS(phiOld.copy(), c, nt)
@@ -45,38 +31,29 @@ def main():
     phiCTCS = CTCS(phiOld.copy(), c, nt)
     phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx)
 
-    # Calculate and print out error norms
-    print("FTCS l2 error norm = ", l2ErrorNorm(phiFTCS, phiAnalytic))
-    print("FTCS linf error norm = ", lInfErrorNorm(phiFTCS, phiAnalytic))
-    print("BTCS l2 error norm = ", l2ErrorNorm(phiBTCS, phiAnalytic))
-    print("BTCS linf error norm = ", lInfErrorNorm(phiBTCS, phiAnalytic))
-    print("Semi Lagrangian l2 error norm = ", l2ErrorNorm(phiBTCS, phiAnalytic))
-    print("Semi Lagrangian linferror norm = ", lInfErrorNorm(phiBTCS, phiAnalytic))
+    # Plotting the solutions
 
-    # Plot the solutions
-    font = {'size'   : 20}
-    plt.rc('font', **font)
+    # FTCS plotted seperately as it is unstable
     plt.figure(1)
-    plt.clf()
-    plt.ion()
-    plt.plot(x, phiOld, label='Initial', color='black')
-    plt.plot(x, phiAnalytic, label='Analytic', color='black',
-             linestyle='--', linewidth=2)
-    plt.plot(x, phiFTBS, label='FTBS', color='#008000')
+    plt.plot(x, phiOld,'k', label='Initial')
+    plt.plot(x, phiAnalytic,'--k', label='Analytic')
     plt.plot(x, phiFTCS, label='FTCS', color='red')
-    plt.plot(x, phiBTCS, label='BTCS', color='blue')
-    plt.plot(x, phiCTCS, label='CTCS', color='yellow')
-    plt.plot(x, phi_sem_lag,'k', label='SL')
-    plt.axhline(0, linestyle=':', color='black')
-    plt.ylim([-0.2,1.2])
-    plt.legend(bbox_to_anchor=(0.5, 0.5))
-    plt.xlabel('$x$')
-    plt.show()
-    input('press return to save file and see timestep error comparison')
-    plt.savefig('plots/SchemeComparisons.png')
+    title = 'nt = %s, nx = %s, c = %s'%(nt, nx, c)
+    plt.title(title)
+    plt.legend()
+    save_Location = 'plots/illustrations/FTCS_%s.png' % c
+    plt.savefig(save_Location, dpi=1000)
 
-    # Plotting errors as a function of number of time steps
-    #TimeStepErrors(xmin, xmax, nx, nt, c)
-
-### Run the function main defined in this file                      ###
-main()
+    plt.figure(2)
+    plt.plot(x, phiOld,'k', label='Initial')
+    plt.plot(x, phiAnalytic,'--k', label='Analytic')
+    plt.plot(x, phiFTBS,'g', label='FTBS', alpha = 0.6)
+    plt.plot(x, phiBTCS,'c', label='BTCS', alpha = 0.6)
+    plt.plot(x, phiCTCS,'m', label='CTCS', alpha = 0.6)
+    plt.plot(x, phi_sem_lag,'y', label='SL', alpha = 0.6)
+    plt.title(title)
+    plt.legend()
+    plt.xlabel('x')
+    save_Location = 'plots/illustrations/Stable_schemes_%s.png' % c
+    plt.savefig(save_Location, dpi=1000)
+    return

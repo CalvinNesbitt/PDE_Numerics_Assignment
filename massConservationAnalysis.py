@@ -61,13 +61,15 @@ np.savetxt('results/mass_conservation/BTCS_Errors.csv',error_Matrix, delimiter='
 plt.plot(nt_values, error_Matrix,'--m^', label = 'CTCS')
 
 # Semi Lagrangian scheme
+nt_values = nt_values[nt_values <= 100] # Use less nt_values as SL scheme is slow
+error_Matrix = np.zeros(len(nt_values)) # Matrix to store errors
+
 for i,nt in enumerate(nt_values):
-    if nt < 60: # Stopping scheme running for too many timesteps
-        dx = (xmax - xmin)/nx_values[i] # Calculate new dx
-        x = np.arange(xmin, xmax, dx) # Spatial grid points
-        phiOld = cosBell(x, 0, 0.75) # Initial condition
-        phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx) # Run the scheme for each (c, nt) pair
-        error_Matrix[i] = nmc_error(phi_sem_lag, phiOld) # Store NMC errors
+    dx = (xmax - xmin)/nx_values[i] # Calculate new dx
+    x = np.arange(xmin, xmax, dx) # Spatial grid points
+    phiOld = cosBell(x, 0, 0.75) # Initial condition
+    phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx) # Run the scheme for each (c, nt) pair
+    error_Matrix[i] = nmc_error(phi_sem_lag, phiOld) # Store NMC errors
 np.savetxt('results/mass_conservation/SL_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Mass conservation error of CTCS scheme for different nt')
 plt.plot(nt_values, error_Matrix,'--k^', label = 'SL')
 

@@ -72,7 +72,7 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
         phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx) # Run the scheme for each (c, nt) pair
         phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
         error_Matrix[j, 1] = l2ErrorNorm(phi_sem_lag, phiAnalytic) # Store L2 errors
-    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--k.', label = 'SL')
+    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--y.', label = 'SL')
 
     #Plot Details
     plt.xlabel('Courant number c')
