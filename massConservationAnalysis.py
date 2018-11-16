@@ -3,7 +3,6 @@
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *
-from TimeStep_Error_Plotting import *
 import numpy as np
 
 def main(xmin, xmax, c):
