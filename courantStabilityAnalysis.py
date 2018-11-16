@@ -22,7 +22,6 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
     upper_nt = math.ceil(nx / lower_c)
     step = int((upper_nt - lower_nt)/num_of_c) # Integer difference between each nt value
     nt_values = np.arange(lower_nt, upper_nt, step)
-    print(nt_values)
 
     error_Matrix = np.zeros((len(nt_values), 2)) # Matrix to store courant value and l2 error
 
@@ -64,7 +63,6 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
 
     # Error calculation for SL scheme
     nt_values = nt_values[nt_values <= 100] # Use less nt_values as SL scheme is slow
-    print(nt_values)
     error_Matrix = np.zeros((len(nt_values), 2))
     for j,nt in enumerate(nt_values):
         c = nx/nt
@@ -75,11 +73,11 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
     plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--y.', label = 'SL')
 
     #Plot Details
-    plt.xlabel('Courant number c')
-    plt.ylabel('L2 Error (Logarithmic)')
+    plt.xlabel('log(c)')
+    plt.ylabel('L2 Error (logarithmic)')
     plt.title('L2 Error as function of c')
     plt.legend(loc=9, bbox_to_anchor=(0.5, -0.1), ncol=5)
-    plt.savefig('plots/L2Error_vs_Courant_Number2', bbox_inches='tight')
-    plt.show()
+    plt.savefig('plots/analysis/L2Error_vs_Courant_Number2', bbox_inches='tight')
+    plt.close('all')
 
     return

@@ -1,4 +1,5 @@
-# Code for advecting a cosine wave by each scheme. Results are saved in plots directory
+# Code for advecting a cosine wave by each scheme. Plots of results are saved in
+# directory plots/illustrations.
 
 import matplotlib.pyplot as plt
 
@@ -10,7 +11,7 @@ from diagnostics import *
 
 def main(xmin, xmax, nx, nt, c):
     "Advect the initial conditions using various advection schemes and"
-    "illustrate results in a plot"
+    "illustrate results in a plot."
 
     # Derived parameters
     dx = (xmax - xmin)/nx
@@ -41,8 +42,12 @@ def main(xmin, xmax, nx, nt, c):
     title = 'nt = %s, nx = %s, c = %s'%(nt, nx, c)
     plt.title(title)
     plt.legend()
+    axes = plt.gca()
+    axes.set_ylim([-0.1,1.1])
+    plt.xlabel('x')
     save_Location = 'plots/illustrations/FTCS_%s.png' % c
     plt.savefig(save_Location, dpi=1000)
+    plt.clf()
 
     plt.figure(2)
     plt.plot(x, phiOld,'k', label='Initial')
@@ -53,7 +58,11 @@ def main(xmin, xmax, nx, nt, c):
     plt.plot(x, phi_sem_lag,'y', label='SL', alpha = 0.6)
     plt.title(title)
     plt.legend()
+    axes = plt.gca()
+    axes.set_ylim([-0.1,1.1])
     plt.xlabel('x')
     save_Location = 'plots/illustrations/Stable_schemes_%s.png' % c
     plt.savefig(save_Location, dpi=1000)
+    plt.close('all')
+
     return
