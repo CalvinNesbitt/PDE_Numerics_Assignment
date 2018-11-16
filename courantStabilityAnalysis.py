@@ -1,4 +1,4 @@
-# Stability analysis for a varying courant number c and fixed spatial resolution
+ # Stability analysis for a varying courant number and fixed spatial resolution
 
 from initialConditions import *
 from advectionSchemes import *
@@ -9,7 +9,7 @@ import math
 
 def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
     "Given an initial condition, and spatial grid conditions. Run each scheme"
-    "or a even number of courant numbers between lower_c and upper_c"
+    "for a even number of courant numbers between lower_c and upper_c"
 
     # Derived grid points
     dx = (xmax - xmin)/nx
@@ -22,6 +22,7 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
     upper_nt = math.ceil(nx / lower_c)
     step = int((upper_nt - lower_nt)/num_of_c) # Integer difference between each nt value
     nt_values = np.arange(lower_nt, upper_nt, step)
+    print(nt_values)
 
     error_Matrix = np.zeros((len(nt_values), 2)) # Matrix to store courant value and l2 error
 
@@ -32,8 +33,7 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
         phiFTBS = FTBS(phiOld.copy(), c, nt) # Run the scheme for each (c, nt) pair
         phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75) # Find analytic solution for (c, nt) pair
         error_Matrix[j, 1] = l2ErrorNorm(phiFTBS, phiAnalytic) # Store L2 errors
-    np.savetxt('results/FTBS_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running FTBS scheme for different courant numbers')
-    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--g^', label = 'FTBS') # Plot results
+    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--g.', label = 'FTBS') # Plot results
 
     # Error calculation for FTCS scheme
     for j,nt in enumerate(nt_values):
@@ -42,8 +42,7 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
         phiFTCS = FTCS(phiOld.copy(), c, nt) # Run the scheme for each (c, nt) pair
         phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
         error_Matrix[j, 1] = l2ErrorNorm(phiFTCS, phiAnalytic) # Store L2 errors
-    np.savetxt('results/FTCS_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running FTCS scheme for different courant numbers')
-    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--r^', label = 'FTCS')
+    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--r.', label = 'FTCS')
 
     # Error calculation for BTCS scheme
     for j,nt in enumerate(nt_values):
@@ -52,8 +51,7 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
         phiBTCS = BTCS(phiOld.copy(), c, nt) # Run the scheme for each (c, nt) pair
         phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
         error_Matrix[j, 1] = l2ErrorNorm(phiBTCS, phiAnalytic) # Store L2 errors
-    np.savetxt('results/BTCS_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running BTCS scheme for different courant numbers')
-    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--c^', label = 'BTCS')
+    plt.plot(error_Matrix[:, 0], error_Matrix[:, 1],'--c.', label = 'BTCS')
 
     # Error calculation for CTCS scheme
     for j,nt in enumerate(nt_values):
@@ -62,19 +60,19 @@ def main(xmin, xmax, nx, lower_c, upper_c, num_of_c):
         phiCTCS = CTCS(phiOld.copy(), c, nt) # Run the scheme for each (c, nt) pair
         phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
         error_Matrix[j, 1] = l2ErrorNorm(phiCTCS, phiAnalytic) # Store L2 errors
-    np.savetxt('results/CTCS_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running CTCS scheme for different courant numbers')
-    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--m^', label = 'CTCS')
+    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--m.', label = 'CTCS')
 
     # Error calculation for SL scheme
+    nt_values = nt_values[nt_values <= 100] # Use less nt_values as SL scheme is slow
+    print(nt_values)
+    error_Matrix = np.zeros((len(nt_values), 2))
     for j,nt in enumerate(nt_values):
-        if nt < 60: # Stopping scheme running for too many timesteps
-            c = nx/nt
-            error_Matrix[j, 0] = c
-            phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx) # Run the scheme for each (c, nt) pair
-            phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
-            error_Matrix[j, 1] = l2ErrorNorm(phi_sem_lag, phiAnalytic) # Store L2 errors
-    np.savetxt('results/SL_Errors.csv',error_Matrix, delimiter=',', newline='\n', header='Results of running CTCS scheme for different courant numbers')
-    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--k^', label = 'SL')
+        c = nx/nt
+        error_Matrix[j, 0] = c
+        phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx) # Run the scheme for each (c, nt) pair
+        phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
+        error_Matrix[j, 1] = l2ErrorNorm(phi_sem_lag, phiAnalytic) # Store L2 errors
+    plt.semilogy(error_Matrix[:, 0], error_Matrix[:, 1],'--k.', label = 'SL')
 
     #Plot Details
     plt.xlabel('Courant number c')

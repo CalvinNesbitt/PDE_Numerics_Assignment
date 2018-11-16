@@ -17,11 +17,9 @@ def main():
     # Parameters
     xmin = 0
     xmax = 1
-    dx =
-    d
-    nx = 100
-    nt = 100
-    c = 0.2
+    nx = 50
+    nt = 50
+    c = 1.2
 
     # Derived parameters
     dx = (xmax - xmin)/nx
@@ -35,6 +33,10 @@ def main():
     #phiOld = mixed(x, 0, 0.3,0.5,0.75)
     # Exact solution is the initial condition shifted around the domain
     phiAnalytic = cosBell((x - c*nt*dx)%(xmax - xmin), 0, 0.75)
+
+    # Courant Stability Analysis
+    courantStabilityAnalysis.main(0, 1, 50, 0.1, 1.8, 100)
+
 
     # Advect the profile using finite difference for all the time steps
     phiFTBS = FTBS(phiOld.copy(), c, nt)
@@ -64,7 +66,7 @@ def main():
     plt.plot(x, phiFTCS, label='FTCS', color='red')
     plt.plot(x, phiBTCS, label='BTCS', color='blue')
     plt.plot(x, phiCTCS, label='CTCS', color='yellow')
-    plt.plot(x, phi_sem_lag, label='SL', color='green')
+    plt.plot(x, phi_sem_lag,'k', label='SL')
     plt.axhline(0, linestyle=':', color='black')
     plt.ylim([-0.2,1.2])
     plt.legend(bbox_to_anchor=(0.5, 0.5))
