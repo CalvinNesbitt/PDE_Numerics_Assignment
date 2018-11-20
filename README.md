@@ -1,4 +1,4 @@
-Python 3 code for linear advection assignment. It runs five numerical schemes for the linear advection equation and saves plots of the scheme results for differenct courant numbers and different number of time steps.
+Python 3 code for linear advection assignment. It runs a variety of numerical schemes for the linear advection equation and saves plots of the scheme results for differenct courant numbers.
 
 It also analyses the schemes via a series of tests. Plots of these test results are also saved.
 
