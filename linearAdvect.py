@@ -1,10 +1,9 @@
 # Code for advecting a cosine wave by each scheme. Plots of results are saved in
 # directory plots/illustrations.
 
-import matplotlib.pyplot as plt
 
-# Read in all the linear advection schemes, initial conditions and other
-# code associated with this application
+# Read in required packages and scripts
+import matplotlib.pyplot as plt
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *
@@ -32,37 +31,72 @@ def main(xmin, xmax, nx, nt, c):
     phiCTCS = CTCS(phiOld.copy(), c, nt)
     phi_sem_lag = sem_lag(phiOld.copy(), c, nt, x, dx)
 
-    # Plotting the solutions
+    # Plotting the solutions, Stable and unstable schemes plotted seperately
+    if (c <= 1):
+        # FTCS plotted seperately as it is unstable
+        plt.figure(1)
+        plt.plot(x, phiOld,'k', label='Initial')
+        plt.plot(x, phiAnalytic,'--k', label='Analytic')
+        plt.plot(x, phiFTCS, label='FTCS', color='red')
+        title = 'nt = %s, nx = %s, c = %s'%(nt, nx, c)
+        plt.title(title)
+        plt.legend()
+        axes = plt.gca()
+        axes.set_ylim([-0.1,1.1])
+        plt.xlabel('x')
+        save_Location = 'plots/illustrations/Unstable_schemes_%s.png' % c
+        plt.savefig(save_Location, dpi=1000)
+        plt.clf()
 
-    # FTCS plotted seperately as it is unstable
-    plt.figure(1)
-    plt.plot(x, phiOld,'k', label='Initial')
-    plt.plot(x, phiAnalytic,'--k', label='Analytic')
-    plt.plot(x, phiFTCS, label='FTCS', color='red')
-    title = 'nt = %s, nx = %s, c = %s'%(nt, nx, c)
-    plt.title(title)
-    plt.legend()
-    axes = plt.gca()
-    axes.set_ylim([-0.1,1.1])
-    plt.xlabel('x')
-    save_Location = 'plots/illustrations/FTCS_%s.png' % c
-    plt.savefig(save_Location, dpi=1000)
-    plt.clf()
+        # Stable solutions
+        plt.figure(2)
+        plt.plot(x, phiOld,'k', label='Initial')
+        plt.plot(x, phiAnalytic,'--k', label='Analytic')
+        plt.plot(x, phiFTBS,'g', label='FTBS', alpha = 0.6)
+        plt.plot(x, phiBTCS,'c', label='BTCS', alpha = 0.6)
+        plt.plot(x, phiCTCS,'m', label='CTCS', alpha = 0.6)
+        plt.plot(x, phi_sem_lag,'y', label='SL', alpha = 0.6)
+        plt.title(title)
+        plt.legend()
+        axes = plt.gca()
+        axes.set_ylim([-0.1,1.1])
+        plt.xlabel('x')
+        save_Location = 'plots/illustrations/Stable_schemes_%s.png' % c
+        plt.savefig(save_Location, dpi=1000)
+        plt.close('all')
 
-    plt.figure(2)
-    plt.plot(x, phiOld,'k', label='Initial')
-    plt.plot(x, phiAnalytic,'--k', label='Analytic')
-    plt.plot(x, phiFTBS,'g', label='FTBS', alpha = 0.6)
-    plt.plot(x, phiBTCS,'c', label='BTCS', alpha = 0.6)
-    plt.plot(x, phiCTCS,'m', label='CTCS', alpha = 0.6)
-    plt.plot(x, phi_sem_lag,'y', label='SL', alpha = 0.6)
-    plt.title(title)
-    plt.legend()
-    axes = plt.gca()
-    axes.set_ylim([-0.1,1.1])
-    plt.xlabel('x')
-    save_Location = 'plots/illustrations/Stable_schemes_%s.png' % c
-    plt.savefig(save_Location, dpi=1000)
-    plt.close('all')
+    if (c > 1):
+        # Unstable schemes
+        plt.figure(1)
+        plt.plot(x, phiOld,'k', label='Initial')
+        plt.plot(x, phiAnalytic,'--k', label='Analytic')
+        plt.plot(x, phiFTCS, label='FTCS', color='red')
+        plt.plot(x, phiFTBS,'g', label='FTBS', alpha = 0.6)
+        plt.plot(x, phiCTCS,'m', label='CTCS', alpha = 0.6)
+        title = 'nt = %s, nx = %s, c = %s'%(nt, nx, c)
+        plt.title(title)
+        plt.legend()
+        axes = plt.gca()
+        axes.set_ylim([-0.1,1.1])
+        plt.xlabel('x')
+        save_Location = 'plots/illustrations/Unstable_schemes_%s.png' % c
+        plt.savefig(save_Location, dpi=1000)
+        plt.clf()
+
+        # Stable solutions
+        plt.figure(2)
+        plt.plot(x, phiOld,'k', label='Initial')
+        plt.plot(x, phiAnalytic,'--k', label='Analytic')
+        plt.plot(x, phiBTCS,'c', label='BTCS', alpha = 0.6)
+
+        plt.plot(x, phi_sem_lag,'y', label='SL', alpha = 0.6)
+        plt.title(title)
+        plt.legend()
+        axes = plt.gca()
+        axes.set_ylim([-0.1,1.1])
+        plt.xlabel('x')
+        save_Location = 'plots/illustrations/Stable_schemes_%s.png' % c
+        plt.savefig(save_Location, dpi=1000)
+        plt.close('all')
 
     return

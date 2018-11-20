@@ -1,9 +1,8 @@
-# Numerical schemes for simulating linear advection for outer code
-# linearAdvect.py
+# Numerical schemes for simulating linear advection
 
-# The numpy package for numerical functions and pi
+# Note scipy.interpolate is required
 import numpy as np
-from Matrix_test import *
+from btcsMAtrix import *
 from scipy.interpolate import lagrange
 
 def FTBS(phiOld, c, nt):

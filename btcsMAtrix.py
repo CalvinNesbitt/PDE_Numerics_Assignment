@@ -1,4 +1,4 @@
-# Will be the matrix for calculating the next time step in BTCS scheme
+# Matrix for calculating the next time step in BTCS scheme
 
 import numpy as np
 

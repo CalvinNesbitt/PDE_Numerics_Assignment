@@ -1,5 +1,6 @@
-# Mass Conservation Analysis
+# Mass Conservation Analysis for each scheme with courant number c = 0.5
 
+# Read in required packages and scripts
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *

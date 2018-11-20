@@ -1,6 +1,6 @@
 # Various different initial conditions for linear advection
 
-
+# Read in required packages and scripts
 import numpy as np
 
 def squareWave(x,alpha,beta):

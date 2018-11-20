@@ -1,7 +1,7 @@
 # Various function for plotting results and for calculating error measures
 
+# Read in required packages and scripts
 import matplotlib.pyplot as plt
-
 import numpy as np
 from initialConditions import *
 from advectionSchemes import *

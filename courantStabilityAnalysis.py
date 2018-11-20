@@ -1,5 +1,6 @@
  # Stability analysis for a varying courant number and fixed spatial resolution
 
+# Read in required packages and scripts
 from initialConditions import *
 from advectionSchemes import *
 from diagnostics import *

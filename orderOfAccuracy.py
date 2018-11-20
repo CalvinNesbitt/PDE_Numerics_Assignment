@@ -2,6 +2,8 @@
 # a variety of spatial discretisations. The l2 error is calculated for each
 # discretisation. Results are saved as plot in directory plots/analysis
 
+# Read in required packages and scripts
+
 import numpy as np
 from advectionSchemes import *
 from initialConditions import *
@@ -63,11 +65,11 @@ def main(xmin, xmax, c):
     plt.loglog(dx_values, error_Matrix,'--y.', label = 'SL')
 
     #Plot Details
-    plt.plot(dx_values, dx_values, label = 'x')
-    plt.loglog(dx_values, dx_values**2, label = 'x^2')
-    plt.xlabel('Spatial step (dx)')
+    plt.plot(dx_values, dx_values, label = 'x') # Gradients in theory
+    plt.loglog(dx_values, dx_values**2, label = 'x^2') # Gradients in theory
+    plt.xlabel('Spatial step dx (Logarithmic)')
     plt.ylabel('L2 Error (Logarithmic)')
     plt.title('L2 Error as function of dx')
-    plt.legend(loc=9, bbox_to_anchor=(0.5, -0.1), ncol=5)
-    plt.savefig('plots/analysis/L2Error_vs_dx', bbox_inches='tight')
-    plt.close()
+    plt.legend()
+    plt.savefig('plots/analysis/L2Error_vs_dx', dpi=1000)
+    plt.close('all')
